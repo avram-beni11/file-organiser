@@ -16,52 +16,71 @@ import os #Allows us to mess around with directories
 from pathlib import Path #Allows us to create new directories
 import shutil #Allows us to move files
 from tkinter import * #GUI
+from tkinter import ttk
 import zipfile
 
 #Change dir to "Downloads"
 os.chdir("C:\\Users\\beni_\\Downloads")
 
-def dolphin_emu():
-    with zipfile.ZipFile(file, 'r') as zip_file:
-            file_list = zip_file.namelist()
-            print("The file list is:", file_list)
-            for rom_name in file_list:
-                file_name, ext = os.path.splitext(rom_name)
-                #if rom_name.endswith(".gba"):
-                os.chdir("D:\\#Python File Organiser")
-                #Remove extension period, capitalises it, and makes a new folder with the capitalised name
-                remove_stop = ext.replace(".", "")
-                folder_name = remove_stop.upper()
-                Path(folder_name).mkdir(exist_ok=True)
-                #Create variable "new_dir", which concatinates our desired final directory with the folder name created earluer
-                new_dir = ("D:\\#Python File Organiser\\" + folder_name)
-                os.chdir("C:\\Users\\beni_\\Downloads")
-                print(file)
-                print("Function Called")
-                try:
-                    shutil.move(file, new_dir)
-                    #os.remove(file + ".zip")
-                except WindowsError:
-                    pass
+root = Tk()
+root.title("Mass File Mover")
+root.resizable(FALSE, FALSE)
+root.configure(bg="#5ea6ee")
+
+# displayContent = " "
+
+# startDir = Entry(root, width=40)
+# startDir.grid(row=0, column=0, columnspan=4, padx=10, pady=10)
+
+# endDir = Entry(root, width=40)
+# endDir.grid(row=1, column=0, columnspan=4, padx=10, pady=10)
+
+# moveBtn = Button(root, text="Move Files", padx=20, pady=1, command=fileMove())
+# moveBtn.grid(row=2)
+
+# def dolphin_emu():
+#     with zipfile.ZipFile(file, 'r') as zip_file:
+#             file_list = zip_file.namelist()
+#             print("The file list is:", file_list)
+#             for rom_name in file_list:
+#                 file_name, ext = os.path.splitext(rom_name)
+#                 #if rom_name.endswith(".gba"):
+#                 os.chdir("D:\\#Python File Organiser")
+#                 #Remove extension period, capitalises it, and makes a new folder with the capitalised name
+#                 remove_stop = ext.replace(".", "")
+#                 folder_name = remove_stop.upper()
+#                 Path(folder_name).mkdir(exist_ok=True)
+#                 #Create variable "new_dir", which concatinates our desired final directory with the folder name created earluer
+#                 new_dir = ("D:\\#Python File Organiser\\" + folder_name)
+#                 os.chdir("C:\\Users\\beni_\\Downloads")
+#                 print(file)
+#                 print("Function Called")
+#                 try:
+#                     shutil.move(file, new_dir)
+#                     #os.remove(file + ".zip")
+#                 except WindowsError:
+#                     pass
 
 #Loops through directory
 for file in os.listdir():
     file_name, ext = os.path.splitext(file)
 
-    #Checks for specific extension
-    # if ext == ".png":
-    #     os.chdir("D:\\#Python File Organiser")
-    #     #Remove extension period, capitalises it, and makes a new folder with the capitalised name
-    #     remove_stop = ext.replace(".", "")
-    #     folder_name = remove_stop.upper()
-    #     Path(folder_name).mkdir(exist_ok=True)
-    #     #Create variable "new_dir", which concatinates our desired final directory with the folder name created earluer
-    #     new_dir = ("D:\\#Python File Organiser\\" + folder_name) 
-    #     #Change dir back to "Downloads"
-    #     os.chdir("C:\\Users\\beni_\\Downloads")
-    #     print("File: " + file + " has been moved to: " + new_dir)
-    #     #Move files from "Downloads" to our new folder named after the files extension
-    #     shutil.move(file, new_dir)
+    def fileMove(displayContent):
+        #Checks for specific extension
+        if ext == ".png":
+            #os.chdir("D:\\#Python File Organiser")
+            os.chdir(displayContent)
+            #Remove extension period, capitalises it, and makes a new folder with the capitalised name
+            remove_stop = ext.replace(".", "")
+            folder_name = remove_stop.upper()
+            Path(folder_name).mkdir(exist_ok=True)
+            #Create variable "new_dir", which concatinates our desired final directory with the folder name created earluer
+            new_dir = ("D:\\#Python File Organiser\\" + folder_name) 
+            #Change dir back to "Downloads"
+            os.chdir("C:\\Users\\beni_\\Downloads")
+            print("File: " + file + " has been moved to: " + new_dir)
+            #Move files from "Downloads" to our new folder named after the files extension
+            shutil.move(file, new_dir)
 
     # if ext == ".zip":
     #     with zipfile.ZipFile(file, 'r') as zip_file:
@@ -85,5 +104,32 @@ for file in os.listdir():
     #             except WindowsError:
     #                 pass
         
-    if ext == ".zip":
-        dolphin_emu()
+    # if ext == ".zip":
+    #     dolphin_emu()
+
+# if ext == ".png":
+#         os.chdir("D:\\#Python File Organiser")
+#         #Remove extension period, capitalises it, and makes a new folder with the capitalised name
+#         remove_stop = ext.replace(".", "")
+#         folder_name = remove_stop.upper()
+#         Path(folder_name).mkdir(exist_ok=True)
+#         #Create variable "new_dir", which concatinates our desired final directory with the folder name created earluer
+#         new_dir = ("D:\\#Python File Organiser\\" + folder_name) 
+#         #Change dir back to "Downloads"
+#         os.chdir("C:\\Users\\beni_\\Downloads")
+#         print("File: " + file + " has been moved to: " + new_dir)
+#         #Move files from "Downloads" to our new folder named after the files extension
+#         shutil.move(file, new_dir)
+displayContent = " "
+textIn = StringVar()
+
+startDir = Entry(root, textvariable=textIn, width=40)
+startDir.grid(row=0, column=0, columnspan=4, padx=10, pady=10)
+
+endDir = Entry(root, width=40)
+endDir.grid(row=1, column=0, columnspan=4, padx=10, pady=10)
+
+moveBtn = Button(root, text="Move Files", padx=20, pady=1, command=fileMove(displayContent))
+moveBtn.grid(row=2)
+
+root.mainloop()
