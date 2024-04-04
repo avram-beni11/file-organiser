@@ -108,26 +108,39 @@ for file in os.listdir():
     #     dolphin_emu()
 
 # if ext == ".png":
-#         os.chdir("D:\\#Python File Organiser")
-#         #Remove extension period, capitalises it, and makes a new folder with the capitalised name
-#         remove_stop = ext.replace(".", "")
-#         folder_name = remove_stop.upper()
-#         Path(folder_name).mkdir(exist_ok=True)
-#         #Create variable "new_dir", which concatinates our desired final directory with the folder name created earluer
-#         new_dir = ("D:\\#Python File Organiser\\" + folder_name) 
-#         #Change dir back to "Downloads"
-#         os.chdir("C:\\Users\\beni_\\Downloads")
-#         print("File: " + file + " has been moved to: " + new_dir)
-#         #Move files from "Downloads" to our new folder named after the files extension
-#         shutil.move(file, new_dir)
+    # os.chdir("D:\\#Python File Organiser")
+    # #Remove extension period, capitalises it, and makes a new folder with the capitalised name
+    # remove_stop = ext.replace(".", "")
+    # folder_name = remove_stop.upper()
+    # Path(folder_name).mkdir(exist_ok=True)
+    # #Create variable "new_dir", which concatinates our desired final directory with the folder name created earluer
+    # new_dir = ("D:\\#Python File Organiser\\" + folder_name) 
+    # #Change dir back to "Downloads"
+    # os.chdir("C:\\Users\\beni_\\Downloads")
+    # print("File: " + file + " has been moved to: " + new_dir)
+    # #Move files from "Downloads" to our new folder named after the files extension
+    # try:
+    #     shutil.move(file, new_dir)
+    # except: 
+    #     print("Directory already exists")
 displayContent = " "
 textIn = StringVar()
 
+def temp_text_start(e):
+   startDir.delete(0,"end")
+
+def temp_text_end(e):
+   endDir.delete(0,"end")
+
 startDir = Entry(root, textvariable=textIn, width=40)
 startDir.grid(row=0, column=0, columnspan=4, padx=10, pady=10)
+startDir.insert(0, "Enter starting directory...")
+startDir.bind("<FocusIn>", temp_text_start)
 
 endDir = Entry(root, width=40)
 endDir.grid(row=1, column=0, columnspan=4, padx=10, pady=10)
+endDir.insert(0, "Enter end directory...")
+endDir.bind("<FocusIn>", temp_text_end)
 
 moveBtn = Button(root, text="Move Files", padx=20, pady=1, command=fileMove(displayContent))
 moveBtn.grid(row=2)
